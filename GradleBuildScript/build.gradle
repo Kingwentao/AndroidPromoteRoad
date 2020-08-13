@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+
+        //配置内部版本
+        internal {
+            initWith debug
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //配置产品维度
+    flavorDimensions 'paying', 'nation'
+    productFlavors {
+        free {
+            dimension 'paying'
+        }
+        paid {
+            dimension 'paying'
+        }
+        china {
+            dimension 'nation'
+        }
+        global {
+            dimension 'nation'
+        }
+
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // 区分: compile、implementation （是否传递依赖）
+    // ex: A -> B ,B -> C ==> A->C (->表示依赖)
+    // compile： 传递依赖（新版使用api代替）
+    // 不传递依赖好处：隔离，不让外部直接使用我的依赖库，避免被依赖者改变(B)改变间阶依赖者（A）重新编译，加快整体编译速度
+    // implementation : 不传递依赖
+    // 传递依赖好处：使用implementation的好处可以让依赖者直接使用我的库
+    //TODO: 问题：如果使用传递依赖，A -> B（有个库Z)，A -> C(也有个库Z)，这两个库Z版本不一样，
+    // 那A该如何确认使用那个版本，编译时版本会冲突吗?
+}
