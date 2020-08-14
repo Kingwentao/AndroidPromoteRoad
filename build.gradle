@@ -24,5 +24,31 @@ allprojects {
 }
 
 task clean(type: Delete) {
+
+    //这里无论是否执行clean的task都会执行
+    println '假配置1'
     delete rootProject.buildDir
+    println '假配置2'
+
+    //真正配置的地方在这里，真正执行的时候才走
+    doLast {
+        println '执行clean后'
+    }
+    //优先于doLast执行
+    doFirst {
+        println '执行clean前'
+    }
+}
+
+task bumpVersion(){
+    doLast{
+        def versionPropsFile = file('version.properties')
+        def versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        def codeBumped = versionProps['VERSION_CODE'].toInteger() + 1
+        versionProps['VERSION_CODE'] = codeBumped.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+        println '升级版本号到 ' + codeBumped
+    }
+
 }
