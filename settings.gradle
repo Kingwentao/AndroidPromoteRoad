@@ -1,3 +1,5 @@
 include ':GradleBuildScript'
 include ':app'
 rootProject.name='AndroidPromoteRoad'
+
+println 'setting.gradle'

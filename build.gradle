@@ -50,5 +50,16 @@ task bumpVersion(){
         versionProps.store(versionPropsFile.newWriter(), null)
         println '升级版本号到 ' + codeBumped
     }
-
 }
+
+//dependsOn 依赖其任务，并先执行依赖task
+task bumpVersionAndNotify(dependsOn: bumpVersion){
+    doLast{
+        println '升级后的通知完成'
+    }
+}
+
+afterEvaluate {
+    //插入第二（定义）、三（执行）阶段中要的代码
+}
+

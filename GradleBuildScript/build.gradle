@@ -2,6 +2,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+//应用定义的插件
+apply plugin: 'com.test.plugin'
+
+//修改配置
+testExtension {
+    name 'new name'
+}
+
 android {
     compileSdkVersion 29
 
