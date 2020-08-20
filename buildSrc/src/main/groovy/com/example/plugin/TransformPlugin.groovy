@@ -12,6 +12,7 @@ import com.android.utils.FileUtils
  * author: created by wentaoKing
  * date: created in 2020/8/17
  * description:
+ *  transForm具体：https://yutiantina.github.io/2019/04/24/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3TransformApi/
  */
 class TransformPlugin extends Transform {
 
