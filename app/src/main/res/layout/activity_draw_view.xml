@@ -7,13 +7,17 @@
     android:orientation="vertical"
     tools:context=".drawview.DrawViewActivity">
 
-    <com.example.androidpromoteroad.drawview.shapemeasure.DashBoardView
-        android:id="@+id/dashView"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"/>
+<!--    <com.example.androidpromoteroad.drawview.shapemeasure.DashBoardView-->
+<!--        android:id="@+id/dashView"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"/>-->
 
 <!--    <com.example.androidpromoteroad.drawview.shapemeasure.PieView
         android:layout_width="300dp"
         android:layout_height="wrap_content"/>-->
+
+    <com.example.androidpromoteroad.drawview.xfermode.XfermodeView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

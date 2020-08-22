@@ -10,9 +10,9 @@ class DrawViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_draw_view)
         var markNum = 0
-        dashView.setOnClickListener {
-            dashView.markNum = markNum++
-            dashView.invalidate()
-        }
+//        dashView.setOnClickListener {
+//            dashView.markNum = markNum++
+//            dashView.invalidate()
+//        }
     }
 }
