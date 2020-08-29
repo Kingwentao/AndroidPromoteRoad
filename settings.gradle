@@ -1,3 +1,4 @@
+include ':lib-reflection'
 include ':GradleBuildScript'
 include ':app'
 rootProject.name='AndroidPromoteRoad'
