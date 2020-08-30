@@ -1,9 +1,9 @@
-package com.example.lib_reflection;
+package com.example.lib_annotation;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Field;
 
 /**
  * author: WentaoKing
@@ -11,7 +11,8 @@ import java.lang.reflect.Field;
  * description: bind view的注解
  */
 
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
+@Target(ElementType.FIELD)
 public @interface BindView {
     int value();
 }

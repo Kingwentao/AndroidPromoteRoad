@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -47,6 +49,7 @@ dependencies {
     //rxjava3
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-
-    implementation project (':lib-reflection')
+    //添加bind模块和对应注解处理器
+    implementation project (':lib-bind')
+    kapt project(':lib-processor')
 }

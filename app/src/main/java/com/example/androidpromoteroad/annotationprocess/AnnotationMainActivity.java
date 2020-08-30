@@ -1,13 +1,13 @@
 package com.example.androidpromoteroad.annotationprocess;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.androidpromoteroad.R;
-import com.example.lib_reflection.BindView;
-import com.example.lib_reflection.Binding;
+import com.example.lib_annotation.BindView;
+import com.example.lib_bind.Binding;
 
 public class AnnotationMainActivity extends AppCompatActivity {
 
@@ -23,15 +23,4 @@ public class AnnotationMainActivity extends AppCompatActivity {
         tvAnnotation.setText("绑定text成功");
     }
 
-    /**
-     * replace deprecated way {@link #newFunction()}
-     */
-    @Deprecated
-    void testDeprecated() {
-
-    }
-
-    void newFunction() {
-
-    }
 }

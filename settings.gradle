@@ -1,6 +1,7 @@
+include ':lib-processor'
+include ':lib-annotation'
+include ':lib-bind'
 include ':lib-reflection'
-include ':GradleBuildScript'
+//include ':GradleBuildScript'
 include ':app'
 rootProject.name='AndroidPromoteRoad'
-
-println 'setting.gradle'

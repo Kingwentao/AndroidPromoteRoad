@@ -3,6 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="buildSrc" target="1.7" />
+      <module name="lib-annotation" target="1.7" />
+      <module name="lib-processor" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

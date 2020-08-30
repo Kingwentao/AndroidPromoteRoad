@@ -1,12 +1,15 @@
 package com.example.lib_reflection;
 
 import android.app.Activity;
+
+import com.example.lib_annotation.BindView;
+
 import java.lang.reflect.Field;
 
 /**
  * author: created by wentaoKing
  * date: created in 2020/8/30
- * description: 绑定view控件的类
+ * description: 通过反射绑定view控件的类
  */
 public class Binding{
 
