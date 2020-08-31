@@ -11,18 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".rxjava3.RxJava3Activity"></activity>
-        <activity android:name=".annotationprocess.AnnotationMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--        <activity android:name=".annotationprocess.AnnotationMainActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- <activity android:name=".drawview.DrawViewActivity"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity> -->
+         <activity android:name=".drawview.DrawViewActivity">
+         <intent-filter>
+         <action android:name="android.intent.action.MAIN" />
+         <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+         </activity>
         <activity android:name=".okhttp.OkHttpMainActivity" />
         <activity android:name=".retrofithttp.RetrofitActivity" />
         <activity android:name=".kotlinupgrade.UpgradeActivity" />

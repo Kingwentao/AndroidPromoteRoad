@@ -10,7 +10,7 @@ import android.util.TypedValue
  */
 
 /**
- * dp to px
+ * dp to px (Float)
  */
 val Float.dp2px
     get() = TypedValue.applyDimension(
@@ -18,3 +18,8 @@ val Float.dp2px
         this,
         Resources.getSystem().displayMetrics
     )
+
+/**
+ * dp to px (Int)
+ */
+val Int.dp2px get() = toFloat().dp2px
