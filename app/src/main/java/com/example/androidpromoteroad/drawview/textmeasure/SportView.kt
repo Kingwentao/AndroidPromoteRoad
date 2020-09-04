@@ -54,11 +54,27 @@ class SportView(context: Context, attrs: AttributeSet?) :
             -90f, 225f, false, paint
         )
 
-        //绘制文字
-        paint.getFontMetrics(fontMetrics)
-        paint.getTextBounds("abab", 0, "abab".length, bounds)
-        canvas.drawText("abab", width /2f ,height/2f - (bounds.top + bounds.bottom)/2f, paint)
+        //文字绘制的难点：纵向居中
+        //绘制静态文字适合用： getTextBounds 测量实际边界
+        val text1 = "bbbb"
+        paint.getTextBounds(text1, 0, text1.length, bounds)
+        //因为文字是以baseLine为垂直基准线，所以需要计算垂直偏移量，并减去它
+        println("height: ${height/2}")
+        println("bound.top: ${bounds.top}")
+        println("bound.bottom: ${bounds.bottom}")
+        canvas.drawRect(bounds,paint)
+        canvas.drawText(text1, width /2f ,height/2f - (bounds.top + bounds.bottom)/2f, paint)
 
+        // 绘制文字
+        //绘制动态文字适合用： getFontMetrics 字体的方式，(避免不同文字差异过大导致的跳动)
+        // 用ascent,descent边界线算出文本的偏移量
+//        paint.textSize = 100.dp2px
+//        paint.style = Paint.Style.FILL
+//        paint.getFontMetrics(fontMetrics)
+//        canvas.drawText(
+//            "ppab", width / 2f,
+//            height / 2f - (fontMetrics.ascent + fontMetrics.descent) / 2f, paint
+//        )
     }
 
 }
