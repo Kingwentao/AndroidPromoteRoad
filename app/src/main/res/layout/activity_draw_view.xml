@@ -22,5 +22,10 @@
 
         <com.example.androidpromoteroad.drawview.textmeasure.SportView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <com.example.androidpromoteroad.drawview.textmeasure.MultilineTextView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </LinearLayout>

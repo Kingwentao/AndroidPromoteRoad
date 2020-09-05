@@ -52,4 +52,6 @@ dependencies {
     //添加bind模块和对应注解处理器
     implementation project (':lib-bind')
     kapt project(':lib-processor')
+    //
+    implementation project(':utilslibrary')
 }
