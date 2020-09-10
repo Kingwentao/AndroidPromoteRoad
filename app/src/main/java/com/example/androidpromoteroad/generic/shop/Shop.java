@@ -5,8 +5,6 @@ package com.example.androidpromoteroad.generic.shop;
  * date: created in 2020/9/8
  * description:
  */
-interface Shop<T> {
-
-    T getFruit();
-
+public interface Shop<T> {
+    void sale(T item);
 }
