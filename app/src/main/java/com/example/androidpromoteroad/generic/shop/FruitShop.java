@@ -12,4 +12,13 @@ public class FruitShop<F extends Fruit> implements Shop<F>{
     public void sale(F item) {
 
     }
+
+    Object changeItem(Object item){
+        Object newItem = new Object();
+        return newItem;
+    }
+
+    <T,E> T change(E item) {
+        //省略具体实现
+    }
 }
