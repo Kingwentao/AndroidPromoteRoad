@@ -6,4 +6,5 @@ package com.example.androidpromoteroad.generic.fruits;
  * description: 水果接口
  */
 public interface Fruit {
+    String getName();
 }

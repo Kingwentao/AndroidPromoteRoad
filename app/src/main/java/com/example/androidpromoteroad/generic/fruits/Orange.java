@@ -6,4 +6,8 @@ package com.example.androidpromoteroad.generic.fruits;
  * description:
  */
 public class Orange implements Fruit {
+    @Override
+    public String getName() {
+        return "Orange";
+    }
 }

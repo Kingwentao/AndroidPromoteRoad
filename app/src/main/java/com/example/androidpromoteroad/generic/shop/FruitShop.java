@@ -18,7 +18,9 @@ public class FruitShop<F extends Fruit> implements Shop<F>{
         return newItem;
     }
 
+    //泛型方法声明
     <T,E> T change(E item) {
         //省略具体实现
     }
+
 }
