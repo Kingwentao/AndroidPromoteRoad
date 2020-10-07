@@ -12,6 +12,7 @@ import com.example.androidpromoteroad.generic.fruits.Orange;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GenericActivity extends AppCompatActivity {
 
@@ -89,7 +90,6 @@ public class GenericActivity extends AppCompatActivity {
     }
 
     void superType(ArrayList<? super Apple> apples){
-
         ArrayList<? super GreenApple> appleList = new ArrayList<Fruit>();
         apples.add(new GreenApple());
         apples.add(new Apple());
@@ -97,8 +97,5 @@ public class GenericActivity extends AppCompatActivity {
         GreenApple greenApple = appleList.get(0);
         Fruit fruit = appleList.get(0);
         Object object = appleList.get(0);
-
-
     }
-
 }
