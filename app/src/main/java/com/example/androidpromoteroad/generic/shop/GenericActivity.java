@@ -34,18 +34,18 @@ public class GenericActivity extends AppCompatActivity {
         ArrayList<? extends Fruit> fruits3 = new ArrayList<Apple>();
         ArrayList<? extends Fruit> fruitsOr = new ArrayList<Orange>();
         //3.1 不能添加
-        fruits3.add(new Orange());  //不可以添加橘子
-        fruits3.add(new Apple());  //为啥不可以添加苹果？？？
-        fruits3.set(0, new Orange()); //也不能使用
+//        fruits3.add(new Orange());  //不可以添加橘子
+//        fruits3.add(new Apple());  //为啥不可以添加苹果？？？
+//        fruits3.set(0, new Orange()); //也不能使用
         //3.2 只能获取
         Fruit getFruit = fruits3.get(0);
         Apple getApple = (Apple) fruits3.get(0);
 
         ArrayList<? super Apple> apples = new ArrayList<>();
-        Fruit fruit = new Fruit() {
-        };
-        apples.add(fruit);
-        Apple apple2 = apples.get(0);
+//        Fruit fruit = new Fruit() {
+//        };
+        //apples.add(fruit);
+        //Apple apple2 = apples.get(0);
 
         //4. 强制转换
         ArrayList<Fruit> fruits4 = (ArrayList) new ArrayList<Apple>();
@@ -73,7 +73,7 @@ public class GenericActivity extends AppCompatActivity {
 
         Apple apple = new Apple();
         //Orange orange1 = changeShop.<Orange,Apple>change(apple); //省略类型
-        Orange orange1 = changeShop.change(apple);
+       // Orange orange1 = changeShop.change(apple);
     }
 
     //这种场景使用<? extends Fruit>更合理
@@ -94,8 +94,8 @@ public class GenericActivity extends AppCompatActivity {
         apples.add(new GreenApple());
         apples.add(new Apple());
 
-        GreenApple greenApple = appleList.get(0);
-        Fruit fruit = appleList.get(0);
+        //GreenApple greenApple = appleList.get(0);
+        //Fruit fruit = appleList.get(0);
         Object object = appleList.get(0);
     }
 }

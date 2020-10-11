@@ -14,7 +14,7 @@ class KotlinGenericMain {
         val outSale = outShop.sale()  // 返回 KotlinApple
         val inSale = inShop.sale()         //  返回 Any
 
-        outShop.buy(KotlinApple()) //编译报错
+        //outShop.buy(KotlinApple()) //编译报错
         inShop.buy(KotlinApple())   //编译通过
      }
 }

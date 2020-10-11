@@ -27,5 +27,15 @@
 
         <com.example.androidpromoteroad.drawview.textmeasure.MultilineTextView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <com.example.androidpromoteroad.drawview.cilpandtransformation.ClipView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <com.example.androidpromoteroad.drawview.cilpandtransformation.TransformationView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </LinearLayout>
