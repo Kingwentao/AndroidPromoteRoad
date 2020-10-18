@@ -7,35 +7,56 @@
     android:orientation="vertical"
     tools:context=".drawview.DrawViewActivity">
 
-<!--    <com.example.androidpromoteroad.drawview.shapemeasure.DashBoardView-->
-<!--        android:id="@+id/dashView"-->
-<!--        android:layout_width="300dp"-->
-<!--        android:layout_height="wrap_content"/>-->
+    <!--    <com.example.androidpromoteroad.drawview.shapemeasure.DashBoardView-->
+    <!--        android:id="@+id/dashView"-->
+    <!--        android:layout_width="300dp"-->
+    <!--        android:layout_height="wrap_content"/>-->
 
-<!--    <com.example.androidpromoteroad.drawview.shapemeasure.PieView
+    <com.example.androidpromoteroad.drawview.shapemeasure.PieView
+        android:id="@+id/pieView"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"/>-->
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
-<!--    <com.example.androidpromoteroad.drawview.xfermode.XfermodeView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
+    <!--    <com.example.androidpromoteroad.drawview.xfermode.XfermodeView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"/>-->
 
-        <com.example.androidpromoteroad.drawview.textmeasure.SportView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+    <com.example.androidpromoteroad.drawview.textmeasure.SportView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
-        <com.example.androidpromoteroad.drawview.textmeasure.MultilineTextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+    <com.example.androidpromoteroad.drawview.textmeasure.MultilineTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
-        <com.example.androidpromoteroad.drawview.cilpandtransformation.ClipView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+    <com.example.androidpromoteroad.drawview.cilpandtransformation.ClipView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
-        <com.example.androidpromoteroad.drawview.cilpandtransformation.TransformationView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+    <com.example.androidpromoteroad.drawview.cilpandtransformation.TransformationView
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <com.example.androidpromoteroad.drawview.animation.CircleView
+        android:id="@+id/circleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <com.example.androidpromoteroad.drawview.animation.FlipSlideView
+        android:id="@+id/flipView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <com.example.androidpromoteroad.drawview.animation.ProvinceView
+        android:id="@+id/provinceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
