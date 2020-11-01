@@ -69,7 +69,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#5CACEC">
+        android:background="#5CACEC"
+        android:visibility="gone">
     <com.example.androidpromoteroad.drawview.materialEditText.MaterialEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,4 +78,14 @@
         android:hint="请输入你的姓名" />
     </FrameLayout>
 
+    <com.example.androidpromoteroad.drawview.selfdefinemeasure.SquareImageView
+        android:layout_width="50dp"
+        android:layout_height="400dp"
+        android:visibility="gone"
+        android:src="@drawable/avatar"/>
+
+    <com.example.androidpromoteroad.drawview.selfdefinemeasure.CircleView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"/>
 </LinearLayout>
