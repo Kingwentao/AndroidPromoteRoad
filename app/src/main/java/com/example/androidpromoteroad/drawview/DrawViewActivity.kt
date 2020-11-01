@@ -15,7 +15,8 @@ import kotlinx.android.synthetic.main.activity_draw_view.*
 class DrawViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_draw_view)
+            // setContentView(R.layout.activity_draw_view)
+        setContentView(R.layout.example_tag_layout)
         var markNum = 0
 //        dashView.setOnClickListener {
 //            dashView.markNum = markNum++
@@ -76,12 +77,12 @@ class DrawViewActivity : AppCompatActivity() {
         transAnimate.start()*/
 
         //作省份切换的动画: 使用自定义的ProvinceEvaluator()
-        val provinceAnimate =
-            ObjectAnimator.ofObject(provinceView, "province",
-                ProvinceEvaluator(), provinces.last())
-        provinceAnimate.startDelay = 1000
-        provinceAnimate.duration = 10000
-        provinceAnimate.start()
+//        val provinceAnimate =
+//            ObjectAnimator.ofObject(provinceView, "province",
+//                ProvinceEvaluator(), provinces.last())
+//        provinceAnimate.startDelay = 1000
+//        provinceAnimate.duration = 10000
+//        provinceAnimate.start()
 
         //绘制动画的时候可以开启离屏缓冲，当然只有自带属性（像translation...）才可以享受带来的优化，
         // 自定义属性不要使用，反而会带来创建的额外开销，性能更差
