@@ -63,6 +63,18 @@
 
     <com.example.androidpromoteroad.drawview.drawableandbitmap.DrawableView
         android:layout_width="match_parent"
-        android:layout_height="match_parent "/>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#5CACEC">
+    <com.example.androidpromoteroad.drawview.materialEditText.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:isShowLabel="true"
+        android:hint="请输入你的姓名" />
+    </FrameLayout>
 
 </LinearLayout>
