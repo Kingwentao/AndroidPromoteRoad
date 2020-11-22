@@ -10,13 +10,14 @@ import com.example.androidpromoteroad.R
 import com.example.androidpromoteroad.drawview.animation.ProvinceEvaluator
 import com.example.androidpromoteroad.drawview.animation.provinces
 import com.example.androidpromoteroad.utils.dp2px
+import kotlinx.android.synthetic.main.activity_annotation_process.*
 import kotlinx.android.synthetic.main.activity_draw_view.*
 
 class DrawViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            // setContentView(R.layout.activity_draw_view)
-        setContentView(R.layout.example_tag_layout)
+        setContentView(R.layout.activity_draw_view)
+        //setContentView(R.layout.example_tag_layout)
         var markNum = 0
 //        dashView.setOnClickListener {
 //            dashView.markNum = markNum++
