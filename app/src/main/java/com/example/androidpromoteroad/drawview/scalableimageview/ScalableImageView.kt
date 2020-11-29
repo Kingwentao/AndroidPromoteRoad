@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.widget.OverScroller
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.GestureDetectorCompat
@@ -29,19 +30,15 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
     //是否放大
     private var isZoom: Boolean = false
     private val mFilingRunner = FilingRunner()
-    private val mGestureDetector = MyGestureDetector()
-    private var scaleFraction: Float = 0f
+    private val mGestureDetectorListener = MyGestureDetectorListener()
+    private val mScaleGestureDetectorListener = MyScaleGestureDetectorListener()
+    private var currentScale: Float = 0f
         set(value) {
             if (value != field) {
                 field = value
                 invalidate()
             }
         }
-
-    //定义一个缩放动画效果
-    private val scaleAnimator: ObjectAnimator by lazy {
-        ObjectAnimator.ofFloat(this, "scaleFraction", 0f, 1f)
-    }
 
     //初始偏移量
     private var originOffsetX = 0f
@@ -59,20 +56,28 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
 
     //如果是同个对象，可以不用设置setOnDoubleTapListener，初始化的时候内部已经设置双击监听
     private var gestureDetector: GestureDetectorCompat =
-        GestureDetectorCompat(context, mGestureDetector)
-//        .apply {
-//            setOnDoubleTapListener(this@ScalableImageView)
-//        }
+        GestureDetectorCompat(context, mGestureDetectorListener)
+
+    //缩放手势
+    private var scaleGestureDetector = ScaleGestureDetector(context, mScaleGestureDetectorListener)
 
     //OverScroller比Scroller效果好，它滑动时可以设置一个over的区域，并且初始滑动速度跟随手指速度
     private var scroller = OverScroller(this.context)
     // private var scroller = Scroller(this.context)
 
+    //定义一个缩放动画效果
+    private val scaleAnimator: ObjectAnimator =
+        ObjectAnimator.ofFloat(this, "currentScale", mSmallScale, mBigScale)
+
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        //return super.onTouchEvent(event)
-        //使用gestureDetector代替super.onTouchEvent(event)，实现双击操作
-        return gestureDetector.onTouchEvent(event)
+        scaleGestureDetector.onTouchEvent(event)
+        //缩放抢占双击，如果不在缩放时才支持双击、滑动
+        if (!scaleGestureDetector.isInProgress) {
+            //使用gestureDetector代替super.onTouchEvent(event)，实现双击操作
+            gestureDetector.onTouchEvent(event)
+        }
+        return true
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -89,15 +94,17 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
             mSmallScale = height / mAvatar.height.toFloat()
             mBigScale = width / mAvatar.width.toFloat() * EXTRACT_FACTOR
         }
+        currentScale = mSmallScale
+        scaleAnimator.setFloatValues(mSmallScale, mBigScale)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val scale = mSmallScale + scaleFraction * (mBigScale - mSmallScale)
         //倒着看代码：先绘制 -》 然后缩放 -》 移动  ps: 这里乘以 scaleFraction 是为了跟随动画节奏，避免改值太快出现闪动
+        val scaleFraction = (currentScale - mSmallScale) / (mBigScale - mSmallScale)
         canvas.translate(offsetX * scaleFraction, offsetY * scaleFraction)
-        Log.d(TAG, "onDraw: sacle: $scale")
-        canvas.scale(scale, scale, width / 2f, height / 2f)
+        Log.d(TAG, "onDraw: sacle: $currentScale")
+        canvas.scale(currentScale, currentScale, width / 2f, height / 2f)
         canvas.drawBitmap(mAvatar, originOffsetX, originOffsetY, mPaint)
     }
 
@@ -113,8 +120,36 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
         offsetY = max(offsetY, -maxOffsetY)
     }
 
+    /**
+     * 缩放手势监听
+     */
+    inner class MyScaleGestureDetectorListener : ScaleGestureDetector.OnScaleGestureListener {
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+            //实现以双手指中心点进行缩放
+            offsetX = (detector.focusX - width / 2) * (1 - mBigScale / mSmallScale)
+            offsetY = (detector.focusY - height / 2) * (1 - mBigScale / mSmallScale)
+            return true
+        }
 
-    inner class MyGestureDetector : android.view.GestureDetector.SimpleOnGestureListener() {
+        override fun onScaleEnd(detector: ScaleGestureDetector?) {
+
+        }
+
+        //返回true表示消耗了事件，返回的 scaleFactor 是本次与上次的距离比值
+        //返回true表示未消耗事件，返回的 scaleFactor 是本次与最初次下手的距离比值
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            //限制最小和最大的scale
+            val tempCurScale = currentScale * detector.scaleFactor
+            return if (tempCurScale < mSmallScale || tempCurScale > mBigScale) {
+                false
+            } else {
+                currentScale *= detector.scaleFactor
+                true
+            }
+        }
+    }
+
+    inner class MyGestureDetectorListener : android.view.GestureDetector.SimpleOnGestureListener() {
         //只收到双击后的Down事件
         override fun onDoubleTap(e: MotionEvent): Boolean {
             isZoom = !isZoom
