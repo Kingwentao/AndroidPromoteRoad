@@ -10,6 +10,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.OverScroller
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.animation.doOnEnd
 import androidx.core.view.GestureDetectorCompat
 import com.example.androidpromoteroad.R
 import com.example.androidpromoteroad.utils.BitmapUtils
@@ -92,8 +93,8 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val scale = mSmallScale + scaleFraction * (mBigScale - mSmallScale)
-        //倒着看代码：先绘制 -》 然后缩放 -》 移动
-        canvas.translate(offsetX, offsetY)
+        //倒着看代码：先绘制 -》 然后缩放 -》 移动  ps: 这里乘以 scaleFraction 是为了跟随动画节奏，避免改值太快出现闪动
+        canvas.translate(offsetX * scaleFraction, offsetY * scaleFraction)
         Log.d(TAG, "onDraw: sacle: $scale")
         canvas.scale(scale, scale, width / 2f, height / 2f)
         canvas.drawBitmap(mAvatar, originOffsetX, originOffsetY, mPaint)
@@ -164,25 +165,36 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
         if (!isZoom) {
             return false
         }
+        fixOffset()
         //因为给的参数distanceX值比较奇怪，偏移量是负值，所以需要-=
-        val maxOffsetX = (mAvatar.width * mBigScale - width) / 2
-        val maxOffsetY = (mAvatar.height * mBigScale - height) / 2
         offsetX -= distanceX
-        offsetX = min(offsetX, maxOffsetX)
-        offsetX = max(offsetX, -maxOffsetX)
         offsetY -= distanceY
-        offsetY = min(offsetY, maxOffsetY)
-        offsetY = max(offsetY, -maxOffsetY)
         invalidate()
         return true
+    }
+
+    /**
+     * 修正偏移量，解决放大后未填充满屏幕的问题（比如在边缘处点击放大）
+     */
+    private fun fixOffset() {
+        val maxOffsetX = (mAvatar.width * mBigScale - width) / 2
+        val maxOffsetY = (mAvatar.height * mBigScale - height) / 2
+        offsetX = min(offsetX, maxOffsetX)
+        offsetX = max(offsetX, -maxOffsetX)
+        offsetY = min(offsetY, maxOffsetY)
+        offsetY = max(offsetY, -maxOffsetY)
     }
 
     override fun onLongPress(e: MotionEvent?) {}
 
     //只收到双击后的Down事件
-    override fun onDoubleTap(e: MotionEvent?): Boolean {
+    override fun onDoubleTap(e: MotionEvent): Boolean {
         isZoom = !isZoom
         if (isZoom) {
+            //实现以手指触摸点的位置去放大：计算以中心点放大后的触摸点偏移量，再初始时就反向偏移回去
+            offsetX = (e.x -  width / 2) * (1 - mBigScale / mSmallScale)
+            offsetY = (e.y -  height / 2) * (1 - mBigScale / mSmallScale)
+            fixOffset()
             scaleAnimator.start()
         } else {
             scaleAnimator.reverse()
