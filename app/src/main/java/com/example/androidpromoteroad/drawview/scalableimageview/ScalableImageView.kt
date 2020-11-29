@@ -6,11 +6,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Log
-import android.view.GestureDetector
 import android.view.MotionEvent
 import android.widget.OverScroller
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.animation.doOnEnd
 import androidx.core.view.GestureDetectorCompat
 import com.example.androidpromoteroad.R
 import com.example.androidpromoteroad.utils.BitmapUtils
@@ -26,11 +24,12 @@ import kotlin.math.min
 const val TAG = "ScalableImageView"
 
 class ScalableImageView(context: Context, attrs: AttributeSet?) :
-    AppCompatImageView(context, attrs), GestureDetector.OnGestureListener,
-    GestureDetector.OnDoubleTapListener, Runnable {
+    AppCompatImageView(context, attrs) {
 
     //是否放大
     private var isZoom: Boolean = false
+    private val mFilingRunner = FilingRunner()
+    private val mGestureDetector = MyGestureDetector()
     private var scaleFraction: Float = 0f
         set(value) {
             if (value != field) {
@@ -57,8 +56,10 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
     private var mBigScale = 0f
     private var mAvatar = BitmapUtils.getBitmap(resources, R.drawable.avatar, 500)
     private var mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+
     //如果是同个对象，可以不用设置setOnDoubleTapListener，初始化的时候内部已经设置双击监听
-    private var gestureDetector: GestureDetectorCompat = GestureDetectorCompat(context, this)
+    private var gestureDetector: GestureDetectorCompat =
+        GestureDetectorCompat(context, mGestureDetector)
 //        .apply {
 //            setOnDoubleTapListener(this@ScalableImageView)
 //        }
@@ -100,79 +101,6 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
         canvas.drawBitmap(mAvatar, originOffsetX, originOffsetY, mPaint)
     }
 
-    override fun onShowPress(e: MotionEvent?) {
-        Log.d(TAG, "onShowPress:")
-    }
-
-    //单击监听的替代方法
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-        //返回值是给系统记录是否消费的，对我们开发者没有用，因为是否消费在down事件就决定了，和这里没有关系
-        return true
-    }
-
-    override fun onDown(e: MotionEvent?): Boolean {
-        //控制gestureDetector.onTouchEvent是否接收事件序列
-        return true
-    }
-
-    //快速滑动，然后松手的行为
-    override fun onFling(
-        downEvent: MotionEvent?,
-        curEvent: MotionEvent?,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
-        if (!isZoom) {
-            return false
-        }
-        val startX = offsetX.toInt()
-        val startY = offsetY.toInt()
-        val minX = (-(mAvatar.width * mBigScale - width) / 2).toInt()
-        val maxX = ((mAvatar.width * mBigScale - width) / 2).toInt()
-        val minY = (-(mAvatar.height * mBigScale - height) / 2).toInt()
-        val maxY = ((mAvatar.height * mBigScale - height) / 2).toInt()
-        //设置overX，overY 可以让滑动边界扩大
-        val overX = 40f.dp2px.toInt()
-        val overY = 40f.dp2px.toInt()
-        scroller.fling(
-            startX, startY, velocityX.toInt(), velocityY.toInt(), minX, maxX, minY,
-            maxY, overX, overY
-        )
-        //invalidate() 或者 post太重了，会在一帧动画里面多次invalidate()，postOnAnimation 会在下一帧执行
-        postOnAnimation(this)
-        //post(this)
-        return true
-    }
-
-    //执行filing后的动画任务
-    override fun run() {
-        //If it returns true, the  animation is not yet finished.
-        if (scroller.computeScrollOffset()) {
-            offsetX = scroller.currX.toFloat()
-            offsetY = scroller.currY.toFloat()
-            invalidate()
-            postOnAnimation(this)
-        }
-    }
-
-    override fun onScroll(
-        downEvent: MotionEvent?,
-        curEvent: MotionEvent?,
-        distanceX: Float,
-        distanceY: Float
-    ): Boolean {
-        Log.d(TAG, "onScroll: x = $distanceX")
-        if (!isZoom) {
-            return false
-        }
-        fixOffset()
-        //因为给的参数distanceX值比较奇怪，偏移量是负值，所以需要-=
-        offsetX -= distanceX
-        offsetY -= distanceY
-        invalidate()
-        return true
-    }
-
     /**
      * 修正偏移量，解决放大后未填充满屏幕的问题（比如在边缘处点击放大）
      */
@@ -185,29 +113,93 @@ class ScalableImageView(context: Context, attrs: AttributeSet?) :
         offsetY = max(offsetY, -maxOffsetY)
     }
 
-    override fun onLongPress(e: MotionEvent?) {}
 
-    //只收到双击后的Down事件
-    override fun onDoubleTap(e: MotionEvent): Boolean {
-        isZoom = !isZoom
-        if (isZoom) {
-            //实现以手指触摸点的位置去放大：计算以中心点放大后的触摸点偏移量，再初始时就反向偏移回去
-            offsetX = (e.x -  width / 2) * (1 - mBigScale / mSmallScale)
-            offsetY = (e.y -  height / 2) * (1 - mBigScale / mSmallScale)
-            fixOffset()
-            scaleAnimator.start()
-        } else {
-            scaleAnimator.reverse()
+    inner class MyGestureDetector : android.view.GestureDetector.SimpleOnGestureListener() {
+        //只收到双击后的Down事件
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            isZoom = !isZoom
+            if (isZoom) {
+                //实现以手指触摸点的位置去放大：计算以中心点放大后的触摸点偏移量，再初始时就反向偏移回去
+                offsetX = (e.x - width / 2) * (1 - mBigScale / mSmallScale)
+                offsetY = (e.y - height / 2) * (1 - mBigScale / mSmallScale)
+                fixOffset()
+                scaleAnimator.start()
+            } else {
+                scaleAnimator.reverse()
+            }
+            return true
         }
-        return true
+
+        override fun onScroll(
+            downEvent: MotionEvent?,
+            curEvent: MotionEvent?,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            Log.d(TAG, "onScroll: x = $distanceX")
+            if (!isZoom) {
+                return false
+            }
+            fixOffset()
+            //因为给的参数distanceX值比较奇怪，偏移量是负值，所以需要-=
+            offsetX -= distanceX
+            offsetY -= distanceY
+            invalidate()
+            return true
+        }
+
+        //单击监听的替代方法
+        override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            //返回值是给系统记录是否消费的，对我们开发者没有用，因为是否消费在down事件就决定了，和这里没有关系
+            return true
+        }
+
+        override fun onDown(e: MotionEvent?): Boolean {
+            //控制gestureDetector.onTouchEvent是否接收事件序列
+            return true
+        }
+
+        //快速滑动，然后松手的行为
+        override fun onFling(
+            downEvent: MotionEvent?,
+            curEvent: MotionEvent?,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (!isZoom) {
+                return false
+            }
+            val startX = offsetX.toInt()
+            val startY = offsetY.toInt()
+            val minX = (-(mAvatar.width * mBigScale - width) / 2).toInt()
+            val maxX = ((mAvatar.width * mBigScale - width) / 2).toInt()
+            val minY = (-(mAvatar.height * mBigScale - height) / 2).toInt()
+            val maxY = ((mAvatar.height * mBigScale - height) / 2).toInt()
+            //设置overX，overY 可以让滑动边界扩大
+            val overX = 40f.dp2px.toInt()
+            val overY = 40f.dp2px.toInt()
+            scroller.fling(
+                startX, startY, velocityX.toInt(), velocityY.toInt(), minX, maxX, minY,
+                maxY, overX, overY
+            )
+            //invalidate() 或者 post太重了，会在一帧动画里面多次invalidate()，postOnAnimation 会在下一帧执行
+            postOnAnimation(mFilingRunner)
+            //post(this)
+            return true
+        }
     }
 
-    //收到双击后的所有序列事件
-    override fun onDoubleTapEvent(e: MotionEvent?): Boolean {
-        return false
-    }
+    //执行filing后的动画任务
+    inner class FilingRunner : Runnable {
+        override fun run() {
+            //If it returns true, the  animation is not yet finished.
+            if (scroller.computeScrollOffset()) {
+                offsetX = scroller.currX.toFloat()
+                offsetY = scroller.currY.toFloat()
+                invalidate()
+                postOnAnimation(this)
+            }
+        }
 
-    override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-        return false
     }
 }
