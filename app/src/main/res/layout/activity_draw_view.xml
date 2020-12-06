@@ -92,5 +92,20 @@
 
     <com.example.androidpromoteroad.drawview.scalableimageview.ScalableImageView
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <com.example.androidpromoteroad.drawview.multitouchview.MultiTouchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <com.example.androidpromoteroad.drawview.multitouchview.FocusPointerMultiTouchView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <com.example.androidpromoteroad.drawview.multitouchview.MultiPointerDrawView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>
