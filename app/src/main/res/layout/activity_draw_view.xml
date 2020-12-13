@@ -59,53 +59,57 @@
         android:id="@+id/provinceView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.drawableandbitmap.DrawableView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#5CACEC"
         android:visibility="gone">
-    <com.example.androidpromoteroad.drawview.materialEditText.MaterialEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:isShowLabel="true"
-        android:hint="请输入你的姓名" />
+
+        <com.example.androidpromoteroad.drawview.materialEditText.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入你的姓名"
+            app:isShowLabel="true" />
     </FrameLayout>
 
     <com.example.androidpromoteroad.drawview.selfdefinemeasure.SquareImageView
         android:layout_width="50dp"
         android:layout_height="400dp"
-        android:visibility="gone"
-        android:src="@drawable/avatar"/>
+        android:src="@drawable/avatar"
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.selfdefinemeasure.CircleView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="gone"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/colorPrimary"
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.scalableimageview.ScalableImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.multitouchview.MultiTouchView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.multitouchview.FocusPointerMultiTouchView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.example.androidpromoteroad.drawview.multitouchview.MultiPointerDrawView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <include layout="@layout/two_view_pager_layout" />
 </LinearLayout>
