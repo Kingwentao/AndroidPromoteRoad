@@ -111,5 +111,7 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-    <include layout="@layout/two_view_pager_layout" />
+    <include layout="@layout/two_view_pager_layout"  android:visibility="gone"/>
+    <include layout="@layout/layout_drag_down_up" android:visibility="gone"/>
+    <include layout="@layout/layout_drag_to_destinaton"/>
 </LinearLayout>
