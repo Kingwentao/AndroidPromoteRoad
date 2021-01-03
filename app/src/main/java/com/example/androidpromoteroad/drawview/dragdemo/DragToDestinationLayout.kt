@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.layout_drag_to_destinaton.view.*
  * date: created in 1/2/21
  * description: 使用startDrag实现视图和数据的拖拽，它的数据可跨进程传递
  */
-class DragToDestinationLayout(context: Context?, attrs: AttributeSet?) :
+class DragToDestinationLayout(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     private val mLongClickListener = OnLongClickListener { v ->
