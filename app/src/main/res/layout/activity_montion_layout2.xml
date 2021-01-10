@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--showPaths：绘制出动画的轨迹-->
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/motion2"
+    app:showPaths="true"
+    tools:context=".motionlayout.MontionLayoutActivity2">
+
+    <!--官方可调整图片（比如饱和度）的控件-->
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/ivAvatar2"
+        android:layout_width="150dp"
+        android:layout_height="300dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/soultravel"/>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

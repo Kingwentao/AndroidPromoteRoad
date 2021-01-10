@@ -15,9 +15,9 @@ class ConstraintLayoutDemo : AppCompatActivity() {
         setContentView(R.layout.activity_constraint_layout_demo)
         //group.visibility = View.GONE
 
-        avatar.setOnClickListener {
-            placeHolder.setContentId(it.id)
-        }
+//        avatar.setOnClickListener {
+//            placeHolder.setContentId(it.id)
+//        }
 
         //setContentView(R.layout.activity_constraint_helper)
     }
