@@ -30,8 +30,10 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
 import okio.Buffer;
+import okio.BufferedSink;
 import okio.BufferedSource;
 import okio.Okio;
+import okio.Sink;
 import okio.Source;
 
 /**
@@ -54,7 +56,8 @@ class IOMain {
 //        nioBlocking();
 //        nioUnBlocking();
 //        okIo();
-        okIo2();
+        writeFileByOKio();
+        readFileByOKio();
     }
 
     private static void fileInputStream() {
@@ -230,43 +233,28 @@ class IOMain {
     }
 
     /**
-     * okio的简易使用
+     * OKio读文件
      */
-    private static void okIo2() {
-        try (BufferedSource bufferedSource = Okio.buffer(Okio.source(new File(path)))) {
-            System.out.println("okio buffer read:" + bufferedSource.readUtf8Line());
+    private static void readFileByOKio() {
+        try (Source source = Okio.source(new File(path));
+             BufferedSource bufferedSource = Okio.buffer(source)) {
+            for (String line; (line = bufferedSource.readUtf8Line()) != null; ) {
+                System.out.println(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void readFile() {
-        InputStream in = null;
-        InputStream binStream = null;
-        try {
-            in = new FileInputStream("./test.txt");
-            binStream = new BufferedInputStream(in);
-            byte[] data = new byte[128];
-            while (binStream.read(data) != -1) {
-
-            }
+    /**
+     * OKio写文件
+     */
+    private static void writeFileByOKio() {
+        try (Sink sink = Okio.sink(new File(path));
+             BufferedSink bufferedSink = Okio.buffer(sink)) {
+            bufferedSink.writeUtf8("write" + "\n" + "success!");
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (binStream != null) {
-                try {
-                    binStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
