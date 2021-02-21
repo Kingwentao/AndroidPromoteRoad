@@ -6,4 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".pluginable.PluginableActivity">
 
+    <TextView
+        android:id="@+id/tvShowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLoadPlugin"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="LoadPlugin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvShowText" />
+
+    <Button
+        android:id="@+id/btnBug"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Bug Bug"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLoadPlugin" />
+
+    <Button
+        android:id="@+id/btnHotfix"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="HotFix"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBug" />
+
+    <Button
+        android:id="@+id/btnRemoveHotfix"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="Remove Hotfix"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHotfix" />
+
+    <Button
+        android:id="@+id/btnKillSelf"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="KillSelf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRemoveHotfix" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,10 @@ package com.example.androidpromoteroad.pluginable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Process;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.androidpromoteroad.R;
 
@@ -22,21 +26,42 @@ import okio.Source;
  * 插件化学习：最重要的功能就是动态部署
  * 模拟粗暴方式：直接把apk放入，通过DexClassLoader加载需要访问的类
  */
-public class PluginableActivity extends AppCompatActivity {
+public class PluginableActivity extends AppCompatActivity implements View.OnClickListener {
+
+    Button btnLoadPlugin;
+    Button btnBug;
+    Button btnHotfix;
+    Button btnRemoveHotfix;
+    Button btnKillSelf;
+    TextView tvShowText;
+    String mDexTargetCachePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pluginable);
+        btnLoadPlugin = findViewById(R.id.btnLoadPlugin);
+        btnHotfix = findViewById(R.id.btnHotfix);
+        tvShowText = findViewById(R.id.tvShowText);
+        btnRemoveHotfix = findViewById(R.id.btnRemoveHotfix);
+        btnKillSelf = findViewById(R.id.btnKillSelf);
+        btnBug = findViewById(R.id.btnBug);
+        btnLoadPlugin.setOnClickListener(this);
+        btnHotfix.setOnClickListener(this);
+        btnBug.setOnClickListener(this);
+        btnRemoveHotfix.setOnClickListener(this);
+        btnKillSelf.setOnClickListener(this);
         //reflectTest();
-        plugin();
+        mDexTargetCachePath =
+                getCacheDir().getPath() + File.separator + "hotfix.dex";
     }
 
+
     //访问插件的内容
-    private void plugin() {
+    private void loadPlugin() {
         String targetPath = getCacheDir().getPath() + File.separator + "plugin.apk";
         //把apk拷贝到cache目录下
-        copyAssetFile(targetPath);
+        copyAssetFile("plugin.apk", targetPath);
         String optimizedDirectory = getCacheDir().getPath();
         //获取插件apk所在目录的类加载器
         DexClassLoader dexClassLoader = new DexClassLoader(targetPath,
@@ -63,8 +88,27 @@ public class PluginableActivity extends AppCompatActivity {
         }
     }
 
-    private void copyAssetFile(String targetPath) {
-        try (Source source = Okio.source(getAssets().open("plugin.apk"));
+    /**
+     * 热修复整个apk
+     */
+    private void hotfixApk() {
+        String targetPath = getCacheDir().getPath() + File.separator + "hotfix.apk";
+        //把apk拷贝到cache目录下
+        copyAssetFile("hotfix.apk", targetPath);
+        HotfixUtil.hotfixApk(this);
+    }
+
+    /**
+     * 热修复dex文件
+     */
+    private void hotfixDex() {
+        //把修复的dex文件拷贝到cache目录下，dex文件可通过d8工具对class文件操作来生成
+        copyAssetFile("hotfix.dex", mDexTargetCachePath);
+        HotfixUtil.hotfixDex(this);
+    }
+
+    private void copyAssetFile(String assetFileName, String targetPath) {
+        try (Source source = Okio.source(getAssets().open(assetFileName));
              BufferedSink bufferedSink = Okio.buffer(Okio.sink(new File(targetPath)))) {
             bufferedSink.writeAll(source);
         } catch (FileNotFoundException e) {
@@ -96,4 +140,38 @@ public class PluginableActivity extends AppCompatActivity {
         }
     }
 
+    private void showBugText() {
+        BugClass bugClass = new BugClass();
+        tvShowText.setText(bugClass.getBug());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnHotfix: {
+                //hotfixApk();
+                hotfixDex();
+                break;
+            }
+            case R.id.btnLoadPlugin: {
+                loadPlugin();
+                break;
+            }
+            case R.id.btnBug: {
+                showBugText();
+                break;
+            }
+            case R.id.btnKillSelf: {
+                Process.killProcess(Process.myPid());
+                break;
+            }
+            case R.id.btnRemoveHotfix: {
+                File dexFile = new File(mDexTargetCachePath);
+                if (dexFile.exists()) {
+                    dexFile.delete();
+                }
+                break;
+            }
+        }
+    }
 }
