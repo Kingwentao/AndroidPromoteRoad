@@ -10,9 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".motionlayout.MotionLayoutActivity3"></activity>
+        <activity android:name=".motionlayout.MotionLayoutActivity"></activity>
+        <activity android:name=".motionlayout.MotionLayoutActivity3" />
         <activity android:name=".motionlayout.MontionLayoutActivity2" />
-        <activity android:name=".motionlayout.MotionLayoutActivity">
+        <activity android:name=".pluginable.PluginableActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
