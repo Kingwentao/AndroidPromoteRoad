@@ -1,7 +1,5 @@
 package com.example.androidpromoteroad.thread;
 
-import static java.sql.DriverManager.println;
-
 /**
  * author: created by wentaoKing
  * date: created in 1/17/21
@@ -17,10 +15,10 @@ class WaitDemoJava {
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println("print: "+ mShareString);
+        System.out.println("print: " + mShareString);
     }
 
-    private  void setShareString(String s) {
+    private void setShareString(String s) {
         mShareString = s;
 //        notifyAll();
     }
@@ -47,6 +45,8 @@ class WaitDemoJava {
             @Override
             public void run() {
                 try {
+                    //如果设置join的时间100ms，那么100ms后，无论join的线程任务是否执行完成，该线程的任务都会继续下去
+                    //thread1.join(100);
                     thread1.join();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
