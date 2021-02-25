@@ -1,3 +1,4 @@
+include ':nbutil'
 include ':plugin'
 include ':utilslibrary'
 include ':lib-processor'
