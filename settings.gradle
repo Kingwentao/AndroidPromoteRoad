@@ -1,6 +1,6 @@
-include ':nbutil'
+include(":nbutil")
+project(":nbutil").projectDir = new File("./NBUtil")
 include ':plugin'
-include ':utilslibrary'
 include ':lib-processor'
 include ':lib-annotation'
 include ':lib-bind'

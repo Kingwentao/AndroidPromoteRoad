@@ -12,15 +12,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/GradleBuildScript" />
+            <option value="$PROJECT_DIR$/NBUtil" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/lib-annotation" />
             <option value="$PROJECT_DIR$/lib-bind" />
             <option value="$PROJECT_DIR$/lib-processor" />
             <option value="$PROJECT_DIR$/lib-reflection" />
-            <option value="$PROJECT_DIR$/nbutil" />
             <option value="$PROJECT_DIR$/plugin" />
-            <option value="$PROJECT_DIR$/utilslibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

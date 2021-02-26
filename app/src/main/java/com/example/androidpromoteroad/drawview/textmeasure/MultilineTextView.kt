@@ -7,8 +7,9 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 import com.example.androidpromoteroad.R
+import com.example.androidpromoteroad.utils.BitmapUtils
 import com.example.androidpromoteroad.utils.dp2px
-import com.example.utilslibrary.BitmapUtil
+import com.wtk.nbutil.util.BitmapUtil
 
 /**
  * author: WentaoKing

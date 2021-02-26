@@ -1,5 +1,6 @@
 package com.wtk.nbutil.util
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -105,5 +106,22 @@ object BitmapUtil {
         val matrix = Matrix()
         matrix.postScale(scaleWidth, scaleHeight)
         return Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false)
+    }
+
+    /**
+     * 获取图片的bitmap
+     * @param resources 图片资源
+     * @param bitmap Int bitmap
+     * @param width Int 需要的图片宽度
+     * @return Bitmap
+     */
+    fun getImageBitmap(resources: Resources, bitmap: Int, width: Int): Bitmap {
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeResource(resources, bitmap, options)
+        options.inJustDecodeBounds = false
+        options.inDensity = options.outWidth
+        options.inTargetDensity = width
+        return BitmapFactory.decodeResource(resources, bitmap, options)
     }
 }
