@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".bitmap.BitmapActivity"></activity>
+        <activity android:name=".leakcanary.LeakCanaryActivity" />
+        <activity android:name=".bitmap.BitmapActivity" />
         <activity android:name=".motionlayout.MotionLayoutActivity" />
         <activity android:name=".motionlayout.MotionLayoutActivity3" />
         <activity android:name=".motionlayout.MontionLayoutActivity2" />
