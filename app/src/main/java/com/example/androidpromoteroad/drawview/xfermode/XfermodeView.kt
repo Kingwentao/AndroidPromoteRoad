@@ -19,7 +19,7 @@ private val XFERMODE = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
 
 /**
  * 学习xfermodeView的使用
- * 包括官方示例和原形头像实战
+ * 包括官方示例和圆形头像实战
  */
 class XfermodeView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
@@ -31,7 +31,9 @@ class XfermodeView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        //圆形头像
         //drawCircleAvatarView(canvas)
+        //官方范例
         drawOfficialExample(canvas)
     }
 
@@ -49,8 +51,8 @@ class XfermodeView(context: Context, attrs: AttributeSet?) : View(context, attrs
      * 绘制一个圆形的头像
      */
     private fun drawCircleAvatarView(canvas: Canvas) {
-        //准备一个离屏缓冲（区域要尽可能的小，满足条件大小就好，它比较耗费性能）,
-        // 若不使用离屏缓冲，直接绘制就没有效果：画板的背景会影响模式的使用
+        //准备一个离屏缓冲（区域要尽可能的小，满足条件大小就好，它比较耗费性能），在透明缓冲区域绘制
+        //若不使用离屏缓冲，直接绘制就没有效果：画板的整个背景会参与模式的使用，导致效果不对
         val count = canvas.saveLayer(rectBounds, null)
         canvas.drawOval(rectBounds, paint)
         paint.xfermode = XFERMODE
@@ -76,8 +78,9 @@ class XfermodeView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     /**
      * 绘制官方案例：圆与矩形的xfremode
-     * 不能直接绘制图形，要通过bitmap来存储两个绘制的内容
-     * 模式是通过对整块区域的（bitmap的区域）实现
+     * 不能直接绘制图形，xfermode的使用不是两个图形的叠加，而是对两块区域的操作。只通过图形会导致参与的只是图形区域，
+     * 这样区域不够，最终的效果也是不对的。
+     * 所以需要要通过bitmap设定区域大小，并存储绘制的内容
      */
     private fun drawOfficialExample(canvas: Canvas) {
         val bounds = RectF(0f, 0f, 150f.dp2px, 200f.dp2px)
