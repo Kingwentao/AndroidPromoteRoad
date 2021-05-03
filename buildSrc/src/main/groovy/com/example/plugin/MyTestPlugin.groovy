@@ -16,8 +16,8 @@ class MyTestPlugin implements Plugin<Project>{
         target.afterEvaluate {
             println "执行插件 ${pluginExtension.name}"
         }
-        //
         def pluginTransform = new TransformPlugin()
+        //拿到已有的android的扩展BaseExtension，对其进行干预
         def baseExtension = target.extensions.getByType(BaseExtension)
         baseExtension.registerTransform(pluginTransform)
     }

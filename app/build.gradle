@@ -6,6 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+//应用定义的插件
+apply plugin: 'com.test.plugin'
+
+//修改配置
+testExtension {
+    name 'new name'
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
