@@ -24,17 +24,16 @@ allprojects {
 }
 
 task clean(type: Delete) {
-
-    //这里无论是否执行clean的task都会执行
+    //直接写入task里面的代码，属于配置阶段，所以配置阶段就会执行，即无论是否执行clean的task都会执行
     println '假配置1'
     delete rootProject.buildDir
     println '假配置2'
 
-    //真正配置的地方在这里，真正执行的时候才走
+    //doLast真正执行该task的时候才会进入，在doFirst后执行
     doLast {
         println '执行clean后'
     }
-    //优先于doLast执行
+    //doFirst真正执行该task的时候才会进入，会插入到doLast前执行
     doFirst {
         println '执行clean前'
     }
@@ -60,6 +59,6 @@ task bumpVersionAndNotify(dependsOn: bumpVersion){
 }
 
 afterEvaluate {
-    //插入第二（定义）、三（执行）阶段中要的代码
+    //插入第二（定义）、三（执行）阶段中要的代码，比如文件、网络相关操作
 }
 
