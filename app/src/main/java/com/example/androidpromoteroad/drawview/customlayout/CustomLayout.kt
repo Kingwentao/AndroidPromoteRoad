@@ -24,7 +24,7 @@ abstract class CustomLayout(context: Context) : ViewGroup(context) {
     }
 
     protected fun View.defaultHeightMeasureSpec(parent: ViewGroup): Int {
-        return when (layoutParams.width) {
+        return when (layoutParams.height) {
             LayoutParams.MATCH_PARENT -> parent.measuredHeight.toExactlyMeasureSpec()
             LayoutParams.WRAP_CONTENT -> LayoutParams.WRAP_CONTENT.toAtMostMeasureSpec()
             0 -> throw IllegalArgumentException("layout param is not allow zero!")

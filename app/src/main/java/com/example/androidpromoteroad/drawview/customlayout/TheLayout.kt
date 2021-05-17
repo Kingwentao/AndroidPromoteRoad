@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
 import androidx.core.view.marginTop
 import com.example.androidpromoteroad.R
 import com.example.androidpromoteroad.utils.dp2px
@@ -24,55 +23,53 @@ class TheLayout(context: Context) : CustomLayout(context) {
         private const val TAG = "TheLayout"
     }
 
-    val header = AppCompatImageView(context).apply {
-        scaleType = ImageView.ScaleType.FIT_XY
-        setImageResource(R.drawable.avatar)
-        layoutParams = LayoutParams(150.dp2px.toInt(), 50.dp2px.toInt())
+    private val headerBanner = AppCompatImageView(context).apply {
+        scaleType = ImageView.ScaleType.CENTER
+        setImageResource(R.drawable.aerbeisishan)
+        layoutParams = LayoutParams(MATCH_PARENT, 150.dp2px.toInt())
         addView(this)
     }
 
-    val avatar = AppCompatImageView(context).apply {
+    private val avatar = AppCompatImageView(context).apply {
         setImageResource(R.drawable.avatar)
-        layoutParams = LayoutParams(30.dp2px.toInt(), 30.dp2px.toInt())
+        layoutParams = LayoutParams(60.dp2px.toInt(), 60.dp2px.toInt())
         addView(this)
     }
 
-    val messageTitle = AppCompatTextView(context).apply {
-        text = "AppCompatTextView"
+    private val avatarName = AppCompatTextView(context).apply {
+        text = "WTKING"
         layoutParams = LayoutParams(WRAP_CONTENT, WRAP_CONTENT)
-        textSize = 15.dp2px
+        textSize = 8.dp2px
         addView(this)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         //测量每个view的大小
-        header.autoMeasure()
+        headerBanner.autoMeasure()
         avatar.autoMeasure()
-        val messageWidth = measuredWidth - messageTitle.marginLeft -
-                messageTitle.marginRight - avatar.measuredWidthWithMargin()
-        messageTitle.measure(
-            messageWidth.toExactlyMeasureSpec(),
-            messageTitle.defaultHeightMeasureSpec(this)
+        val nameWidth = measuredWidth - avatar.measuredWidth
+        avatarName.measure(
+            nameWidth.toExactlyMeasureSpec(),
+            avatarName.defaultHeightMeasureSpec(this)
         )
-
-        val max = avatar.marginTop + messageTitle.measuredHeightWithMargin()
+        //计算banner下的高度
+        val max = avatar.marginTop + avatarName.measuredHeightWithMargin()
             .coerceAtLeast(avatar.measuredHeight)
-
         //计算整个wrap_content的高度
-        val wrapContentHeight = header.measuredHeightWithMargin() + max
+        val wrapContentHeight = headerBanner.measuredHeightWithMargin() + max
         Log.d(TAG, "onMeasure: max: $max ch: $wrapContentHeight")
         setMeasuredDimension(measuredWidth, wrapContentHeight)
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        header.layout(0, 0)
-        Log.d(TAG, "onLayout: height: ${header.measuredHeight}")
+        headerBanner.layout(0, 0)
+        Log.d(TAG, "onLayout: height: ${headerBanner.measuredHeight}")
         avatar.let {
-            it.layout(it.marginLeft, header.bottom + marginTop)
+            it.layout(it.marginLeft, headerBanner.bottom + marginTop)
         }
-        messageTitle.let {
-            it.layout(avatar.right + it.marginLeft, avatar.top + it.marginTop)
+        avatarName.let {
+            it.layout(0, avatar.top + it.marginTop, true)
         }
     }
 
