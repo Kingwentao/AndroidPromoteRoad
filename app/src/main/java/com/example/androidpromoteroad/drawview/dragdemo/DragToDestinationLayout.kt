@@ -20,7 +20,10 @@ class DragToDestinationLayout(context: Context, attrs: AttributeSet?) :
     ConstraintLayout(context, attrs) {
 
     private val mLongClickListener = OnLongClickListener { v ->
+        //封装传输的数据
         val imageData = ClipData.newPlainText("name", v.contentDescription)
+        //data: 跨进程拖拽时传输的数据 localState: 应用内的数据
+        // DragShadowBuilder：拖拽时view，它是一坨像素被绘制在最上层，所以不会被盖住
         ViewCompat.startDragAndDrop(v, imageData, DragShadowBuilder(v), null, 0)
     }
 

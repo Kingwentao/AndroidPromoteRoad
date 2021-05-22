@@ -1,5 +1,5 @@
 # AndroidPromoteRoad
-Road to improve android skills
+Road to improve android skills, use to learn by example code.
 
 ### 相关博客文章
 - [重学泛型](https://juejin.im/post/6876221872204316685)

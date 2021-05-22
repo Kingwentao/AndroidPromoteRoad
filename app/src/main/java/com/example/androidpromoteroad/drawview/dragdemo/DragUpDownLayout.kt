@@ -39,12 +39,13 @@ class DragUpDownLayout(context: Context,attrs: AttributeSet?): FrameLayout(conte
 
     inner class DragCallback: ViewDragHelper.Callback(){
 
+        //是否抓住view，这个方法必须实现，其他都可不实现
         override fun tryCaptureView(child: View, pointerId: Int): Boolean {
             return true
         }
 
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
-            //默认值是0
+            //默认值是0，表示不拖动，返回top表示允许向上拖
             return top
         }
 
@@ -65,5 +66,11 @@ class DragUpDownLayout(context: Context,attrs: AttributeSet?): FrameLayout(conte
             }
             postInvalidateOnAnimation()
         }
+
+        //被拖拽时会被回调
+        override fun onViewCaptured(capturedChild: View, activePointerId: Int) {
+            super.onViewCaptured(capturedChild, activePointerId)
+        }
+
     }
 }
