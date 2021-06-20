@@ -171,9 +171,10 @@ class IOMain {
         try {
             RandomAccessFile file = new RandomAccessFile(path, "r");
             FileChannel channel = file.getChannel();
+            //note：nio需要自己操作buffer
             ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
             channel.read(byteBuffer);
-            //flip后才能读
+            //flip后才能读，修正limit和position标志
             byteBuffer.flip();
             System.out.println(Charset.defaultCharset().decode(byteBuffer));
             //读完后要重置
@@ -194,6 +195,7 @@ class IOMain {
             serverSocketChannel.bind(new InetSocketAddress(80));
             //把channel配置成非阻塞式的
             serverSocketChannel.configureBlocking(false);
+            //selector: 类似一个监听器
             Selector selector = Selector.open();
             serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
             while (true) {
@@ -202,7 +204,7 @@ class IOMain {
                     if (!key.isAcceptable()) {
                         break;
                     }
-                    //这个地方会阻塞
+                    //accept()会阻塞
                     SocketChannel socketChannel = serverSocketChannel.accept();
                     ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
                     //写入: 把读到的值返回
@@ -219,12 +221,13 @@ class IOMain {
     }
 
     /**
-     * okio的使用
+     * OKio的使用
+     * 对于OKio来说，buffer是个外部工具而已，和nio不一样，OKio要把数据写入到buffer，需要通过source的read方法
      */
     private static void okIo() {
         try (Source source = Okio.source(new File(path))) {
             Buffer buffer = new Buffer();
-            //把source的文件读到buffer里面去
+            //把source的数据写入到buffer里面去
             source.read(buffer, 1024);
             System.out.println("okio buffer read:" + buffer.readUtf8Line());
         } catch (IOException e) {
