@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
  * date: created in 1/17/21
  * description:
  */
-public class MainJava {
+public class ExecutorDemo {
 
     public static void main(String[] args) {
         System.out.println("java main");
