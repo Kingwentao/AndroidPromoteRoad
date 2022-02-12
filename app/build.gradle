@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'android-aspectjx'
+
 //应用定义的插件
 apply plugin: 'com.test.plugin'
 
@@ -40,6 +42,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    aspectjx {
+        //排除所有package的class文件及库（jar文件）
+        exclude 'androidx'
+        exclude 'com.google'
+        exclude 'org.jetbrains.kotlin'
+        exclude 'com.squareup'
+        exclude 'android.support'
+        exclude 'versions.9'
+        exclude 'module-info'
+    }
 }
 
 dependencies {
@@ -58,7 +70,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     //添加bind模块和对应注解处理器
-    implementation project (':lib-bind')
+    implementation project(':lib-bind')
     kapt project(':lib-processor')
     //工具库
     implementation project(':nbutil')
@@ -67,6 +79,6 @@ dependencies {
 
     //blockcanary
     //implementation 'com.github.markzhai:blockcanary-android:1.5.0'
-     debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
     // releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
 }
